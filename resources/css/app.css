@@ -1,0 +1,306 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../views/**/*.blade.php';
+
+/*
+| Dark mode dipicu lewat kelas pada elemen <html>, bukan lewat prefers-color-scheme,
+| supaya tombol tema bisa mengganti mode secara sengaja.
+*/
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+| Token warna. Nilai didefinisikan di sini, bukan di @theme, supaya mode gelap hanya
+| perlu menimpa nilai yang sama. Semua komponen memakai nama token, tidak pernah
+| kode warna langsung, sehingga tidak ada komponen yang bisa luput dari mode gelap.
+*/
+:root {
+    --tinta: #1c1c1a;
+    --tinta-lembut: #52524d;
+    --tinta-samar: #6f6f68;
+    --permukaan: #ffffff;
+    --permukaan-lembut: #fafaf8;
+    --latar: #f1f2f0;
+    --garis: #e2e3df;
+    --garis-kuat: #9a9a92;
+    --inti: #0b5844;
+    --inti-tua: #073c2e;
+    --inti-kunci: #ffffff;
+    --inti-lembut: #e7f0ec;
+    --aksen: #8a4f00;
+    --aksen-lembut: #fbf0dd;
+    --bahaya: #ab2318;
+    --bahaya-lembut: #fbe9e7;
+    --kunci: #0b5844;
+
+    /* Bayangan ditumpuk supaya tepi kartu terasa tebal, bukan seperti garis. */
+    --bayang: 0 1px 2px rgb(28 28 26 / 0.04), 0 1px 3px rgb(28 28 26 / 0.06);
+    --bayang-naik: 0 2px 4px rgb(28 28 26 / 0.04), 0 12px 28px -12px rgb(28 28 26 / 0.18);
+    --bayang-tebal: 0 2px 6px rgb(28 28 26 / 0.06), 0 18px 40px -16px rgb(28 28 26 / 0.24);
+    --cincin: 0 0 0 3px rgb(11 88 68 / 0.16);
+    --cincin-aksen: 0 0 0 3px rgb(138 79 0 / 0.18);
+    --cincin-bahaya: 0 0 0 3px rgb(171 35 24 / 0.16);
+}
+
+.dark {
+    --tinta: #f3f3f0;
+    --tinta-lembut: #b9b9b2;
+    --tinta-samar: #9a9a93;
+    --permukaan: #1b1b19;
+    --permukaan-lembut: #232320;
+    --latar: #0e0f0e;
+    --garis: #2f302c;
+    --garis-kuat: #6f6f68;
+    --inti: #5ec9a1;
+    --inti-tua: #8fdcbd;
+    --inti-kunci: #08130f;
+    --inti-lembut: #16302a;
+    --aksen: #efb53f;
+    --aksen-lembut: #332713;
+    --bahaya: #f4867c;
+    --bahaya-lembut: #351b18;
+    --kunci: #8fdcbd;
+
+    --bayang: 0 1px 2px rgb(0 0 0 / 0.4), 0 1px 3px rgb(0 0 0 / 0.35);
+    --bayang-naik: 0 2px 4px rgb(0 0 0 / 0.35), 0 14px 30px -14px rgb(0 0 0 / 0.65);
+    --bayang-tebal: 0 2px 6px rgb(0 0 0 / 0.4), 0 20px 44px -18px rgb(0 0 0 / 0.75);
+    --cincin: 0 0 0 3px rgb(94 201 161 / 0.22);
+    --cincin-aksen: 0 0 0 3px rgb(239 181 63 / 0.22);
+    --cincin-bahaya: 0 0 0 3px rgb(244 134 124 / 0.24);
+}
+
+@theme inline {
+    --font-sans: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+    --color-tinta: var(--tinta);
+    --color-tinta-lembut: var(--tinta-lembut);
+    --color-tinta-samar: var(--tinta-samar);
+    --color-permukaan: var(--permukaan);
+    --color-permukaan-lembut: var(--permukaan-lembut);
+    --color-latar: var(--latar);
+    --color-garis: var(--garis);
+    --color-garis-kuat: var(--garis-kuat);
+    --color-inti: var(--inti);
+    --color-inti-tua: var(--inti-tua);
+    --color-inti-kunci: var(--inti-kunci);
+    --color-inti-lembut: var(--inti-lembut);
+    --color-aksen: var(--aksen);
+    --color-aksen-lembut: var(--aksen-lembut);
+    --color-bahaya: var(--bahaya);
+    --color-bahaya-lembut: var(--bahaya-lembut);
+    --color-kunci: var(--kunci);
+
+    /* Sudut membulat besar. Nilai rounded-sm masih dipakai di banyak view, jadi
+       mengganti nilai token ini modernize tampilan seketika tanpa menyentuh
+       tiap file satu per satu. */
+    --radius-sm: 0.375rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+    --radius-2xl: 1.375rem;
+
+    --shadow-halus: var(--bayang);
+    --shadow-naik: var(--bayang-naik);
+    --shadow-tebal: var(--bayang-tebal);
+    --shadow-fokus: var(--cincin);
+    --shadow-fokus-aksen: var(--cincin-aksen);
+    --shadow-fokus-bahaya: var(--cincin-bahaya);
+}
+
+/*
+| MOTION 1: hanya transisi state pada elemen interaktif, 120ms. Tidak ada animasi
+| masuk halaman, karena produk ini dipakai membaca tabel panjang berulang kali.
+*/
+@layer base {
+    html {
+        background-color: var(--latar);
+        color: var(--tinta);
+        -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+        @apply font-sans text-[0.9375rem] leading-relaxed antialiased;
+
+        /* Cahaya lembut di sudut atas layar memberi kedalaman pada latar polos
+           tanpa perlu gambar dekoratif. Warnanya diturunkan dari token inti
+           supaya otomatis mengikuti mode gelap. */
+        background-image: radial-gradient(
+            1100px 420px at 12% -12%,
+            color-mix(in oklab, var(--inti) 8%, transparent),
+            transparent 62%
+        );
+        background-attachment: fixed;
+    }
+
+    /*
+    | Angka di kolom tabel harus sejajar vertikal, jadi semua angka mewarisi figur
+    | tabular dari font.
+    */
+    table,
+    [data-angka] {
+        font-variant-numeric: tabular-nums;
+    }
+
+    /*
+    | Indikator fokus memakai cincin yang mengikuti bentuk elemen, bukan outline
+    | keras di pojok kartu. Aplikasi ini juga dipakai petugas dengan keyboard.
+    */
+    :focus-visible {
+        outline: 2px solid var(--kunci);
+        outline-offset: 2px;
+        border-radius: 6px;
+    }
+
+    ::selection {
+        background-color: var(--inti);
+        color: var(--inti-kunci);
+    }
+
+    /* Scrollbar tipis supaya sidebar dan panel tabel tidak terlihat tebal di
+       sistem yang gelap. */
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: var(--garis-kuat) transparent;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+        }
+    }
+}
+
+/* Bilah memuat di bagian atas layar. Satu keyframe, tanpa pustaka animasi. */
+@keyframes geser-indikator {
+    from {
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateX(320%);
+    }
+}
+
+/*
+| State sidebar disimpan sebagai kelas pada elemen <html>, bukan pada elemen
+| sidebar-nya, supaya transisi dan keadaan awal memakai sumber yang sama dan
+| tidak berkedip ketika halaman dimuat ulang.
+*/
+[data-sidebar-ikon] {
+    display: none;
+}
+
+:root:not(.sidebar-ringkas) [data-sidebar-ikon='ciut'] {
+    display: inline-flex;
+}
+
+.sidebar-ringkas [data-sidebar-ikon='luas'] {
+    display: inline-flex;
+}
+
+.sidebar-ringkas [data-sidebar] {
+    width: 5rem;
+}
+
+.sidebar-ringkas [data-sidebar-label],
+.sidebar-ringkas [data-sidebar-kelompok] {
+    display: none;
+}
+
+.sidebar-ringkas [data-sidebar-menu] a,
+.sidebar-ringkas [data-sidebar-menu] button {
+    justify-content: center;
+    padding-inline: 0;
+}
+
+/* Layar sempit: sidebar menjadi laci yang meluncur, muncul lewat .sidebar-terbuka. */
+.sidebar-terbuka [data-sidebar] {
+    transform: translateX(0);
+}
+
+.sidebar-terbuka [data-sidebar-lapis] {
+    display: block;
+}
+
+@layer components {
+    /*
+    | Permukaan utama aplikasi. Semua kartu memakai kelas ini supaya radius,
+    | bayangan, dan warna tepi selalu sama di seluruh halaman.
+    */
+    .kartu {
+        @apply rounded-xl border border-garis bg-permukaan shadow-halus;
+    }
+
+    /* Kartu yang bisa diklik atau dituju. Angkat sedikit saat hover supaya
+       pengguna tahu apa yang hidup dan apa yang mati. */
+    .kartu-naik {
+        @apply transition-[box-shadow,transform,border-color] duration-150 ease-out hover:-translate-y-0.5 hover:border-garis-kuat hover:shadow-naik;
+    }
+
+    /* Kepala panel: judul di kiri, daftar aksi di kanan. */
+    .kepala-kartu {
+        @apply flex flex-wrap items-center justify-between gap-x-3 gap-y-1.5 border-b border-garis bg-permukaan-lembut/60 px-5 py-3.5;
+    }
+
+    /*
+    | Varian tombol. Ukuran fokus dan state hover konsisten di semua tombol.
+    */
+    .fokus-terang {
+        background-color: var(--inti);
+        color: var(--inti-kunci);
+    }
+
+    .fokus-ghost {
+        background-color: transparent;
+        color: var(--tinta);
+        border-color: var(--garis-kuat);
+    }
+
+    .fokus-bahaya {
+        background-color: var(--bahaya);
+        color: var(--permukaan);
+        border-color: var(--bahaya);
+    }
+
+    /*
+    | Tabel tetap padat. Kepala tabel punya latar sendiri, sedangkan pemisah antar
+    | baris cukup garis rambut supaya tabel tidak terlihat seperti daftar kotak.
+    */
+    .tabel-dasar {
+        @apply w-full border-collapse text-[0.875rem];
+    }
+
+    .tabel-dasar thead th {
+        @apply sticky top-0 z-10 border-b border-garis bg-permukaan-lembut px-3.5 py-2.5 text-left align-middle text-[0.75rem] font-semibold whitespace-nowrap text-tinta-lembut;
+    }
+
+    .tabel-dasar tbody td {
+        @apply border-b border-garis/70 px-3.5 py-3 align-middle;
+    }
+
+    .tabel-dasar tbody tr:last-child td {
+        @apply border-b-0;
+    }
+
+    .tabel-dasar tbody tr {
+        @apply transition-colors duration-[120ms];
+    }
+
+    .tabel-dasar tbody tr:hover {
+        background-color: color-mix(in oklab, var(--permukaan-lembut) 70%, transparent);
+    }
+}
+
+@layer utilities {
+    .angka {
+        font-variant-numeric: tabular-nums;
+        text-align: right;
+    }
+}
