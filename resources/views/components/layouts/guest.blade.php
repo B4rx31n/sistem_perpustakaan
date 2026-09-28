@@ -26,7 +26,29 @@
 <body class="min-h-full">
     <x-loading-bar />
 
-    <main class="flex min-h-screen items-center justify-center px-4 py-10">
+    {{-- Motif identitas. Mark buku dibuka ulang sebagai tanda air besar di
+         belakang layar, karena ini satu-satunya halaman yang tidak padat data dan
+         tidak ada tabel yang bisa tertutup dekorasi. Opasitasnya rendah supaya
+         tidak pernah jadi gambar yang dibaca lebih dulu sebelum judul. --}}
+    <div aria-hidden="true" class="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1"
+             stroke-linecap="round" stroke-linejoin="round"
+             class="absolute -top-24 -left-24 h-[34rem] w-[34rem] text-pastel-3/35">
+            <path d="M12 6.75C10.5 5.25 8.4 4.5 5.25 4.5c-.9 0-1.5.1-1.5.1v12.9s.6-.1 1.5-.1c3.15 0 5.25.75 6.75 2.25 1.5-1.5 3.6-2.25 6.75-2.25.9 0 1.5.1 1.5.1V4.6s-.6-.1-1.5-.1c-3.15 0-5.25.75-6.75 2.25Z" />
+            <path d="M12 6.75v12.9" />
+            <path d="M7.5 8.4h1.5M7.5 11.1h1.5M7.5 13.8h1.5" opacity=".5" />
+            <path d="M15 8.4h1.5M15 11.1h1.5M15 13.8h1.5" opacity=".5" />
+        </svg>
+
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1"
+             stroke-linecap="round" stroke-linejoin="round"
+             class="absolute -right-20 -bottom-20 h-[26rem] w-[26rem] text-pastel-aksen-2/40">
+            <path d="M12 6.75C10.5 5.25 8.4 4.5 5.25 4.5c-.9 0-1.5.1-1.5.1v12.9s.6-.1 1.5-.1c3.15 0 5.25.75 6.75 2.25 1.5-1.5 3.6-2.25 6.75-2.25.9 0 1.5.1 1.5.1V4.6s-.6-.1-1.5-.1c-3.15 0-5.25.75-6.75 2.25Z" />
+            <path d="M12 6.75v12.9" />
+        </svg>
+    </div>
+
+    <main class="relative z-10 flex min-h-screen items-center justify-center px-4 py-10">
         <div class="w-full max-w-md">
             {{ $slot }}
         </div>

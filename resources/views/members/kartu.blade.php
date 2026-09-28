@@ -11,23 +11,39 @@
     <div class="grid gap-5 lg:grid-cols-3">
         <div class="space-y-5 lg:col-span-2">
             <section aria-labelledby="kartu-anggota" class="kartu overflow-hidden">
-                <div class="flex flex-wrap items-start justify-between gap-4 border-b border-garis px-4 py-4">
-                    <div class="min-w-0">
-                        <p class="text-[0.75rem] font-medium text-tinta-samar">
-                            Perpustakaan Nusantara
-                        </p>
-                        <h2 id="kartu-anggota" class="mt-1 text-[1.25rem] leading-tight font-semibold text-tinta">
-                            {{ $member->name }}
-                        </h2>
-                        <p class="mt-1 font-mono text-[0.75rem] text-tinta-samar">
-                            {{ $member->nomor_anggota ?? 'Tanpa nomor anggota' }}
-                            @if ($member->program_studi)
-                                &middot; {{ $member->program_studi }}
-                            @endif
-                        </p>
+                <div class="flex flex-wrap items-start justify-between gap-4 border-b border-garis bg-grad-kepala px-4 py-4">
+                    <div class="flex min-w-0 items-start gap-3">
+                        {{-- Mark buku di kartu anggota, karena kartu ini adalah
+                             kartu perpustakaan fisik yang ditunjukkan di loket,
+                             bukan sekadar panel data. --}}
+                        <span aria-hidden="true"
+                              class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-grad-inti text-inti-kunci ring-1 ring-pastel-3/60">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+                                 stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 shrink-0">
+                                <path d="M12 6.75C10.5 5.25 8.4 4.5 5.25 4.5c-.9 0-1.5.1-1.5.1v12.9s.6-.1 1.5-.1c3.15 0 5.25.75 6.75 2.25 1.5-1.5 3.6-2.25 6.75-2.25.9 0 1.5.1 1.5.1V4.6s-.6-.1-1.5-.1c-3.15 0-5.25.75-6.75 2.25Z" />
+                                <path d="M12 6.75v12.9" />
+                                <path d="M7.5 8.4h1.5M7.5 11.1h1.5" opacity=".55" />
+                                <path d="M15 8.4h1.5M15 11.1h1.5" opacity=".55" />
+                            </svg>
+                        </span>
+
+                        <div class="min-w-0">
+                            <p class="text-[0.75rem] font-medium text-tinta-samar">
+                                Perpustakaan Nusantara
+                            </p>
+                            <h2 id="kartu-anggota" class="mt-1 text-[1.25rem] leading-tight font-semibold text-tinta">
+                                {{ $member->name }}
+                            </h2>
+                            <p class="mt-1 font-mono text-[0.75rem] text-tinta-samar">
+                                {{ $member->nomor_anggota ?? 'Tanpa nomor anggota' }}
+                                @if ($member->program_studi)
+                                    &middot; {{ $member->program_studi }}
+                                @endif
+                            </p>
+                        </div>
                     </div>
 
-                    <div class="shrink-0 border border-garis bg-permukaan-lembut px-3 py-2 text-right">
+                    <div class="shrink-0 rounded-lg border border-pastel-3 bg-permukaan/70 px-3 py-2 text-right">
                         <p class="text-[0.6875rem] font-medium text-tinta-samar">Nomor anggota</p>
                         <p class="angka mt-1 font-mono text-[1.25rem] leading-none font-semibold text-inti">
                             {{ $member->nomor_anggota ?? '—' }}

@@ -8,10 +8,13 @@
 {{-- Bilah proporsi. Dipakai untuk sebaran bulanan dan stok menipis, dengan
      angka yang selalu ditulis di luar bilah supaya tidak perlu ditebak. --}}
 @php
+    /* Isi bilah memakai gradien dengan tekstur yang sama, bukan warna pekat, supaya
+       panjang bilah tetap terbaca sebagai kuantitas dan tidak berubah jadi
+       dekoratif. Gradien berhenti pada arah yang sama dengan tombol. */
     $gayaIsi = match ($warna) {
-        'aksen' => 'bg-aksen',
-        'bahaya' => 'bg-bahaya',
-        default => 'bg-inti',
+        'aksen' => 'bg-grad-aksen',
+        'bahaya' => 'bg-grad-bahaya',
+        default => 'bg-grad-inti',
     };
 
     $lebar = max(0, min(100, round((float) $persen, 1)));

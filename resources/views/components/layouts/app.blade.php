@@ -32,7 +32,7 @@
     <x-loading-bar />
 
     <a href="#konten-utama"
-       class="sr-only rounded-lg focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-inti focus:px-3 focus:py-2 focus:text-sm focus:text-inti-kunci">
+       class="sr-only rounded-lg focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:border focus:border-pastel-3 focus:bg-grad-inti focus:px-3 focus:py-2 focus:text-sm focus:text-inti-kunci">
         Lompat ke konten utama
     </a>
 
@@ -41,19 +41,13 @@
              oleh kelas .sidebar-ringkas pada elemen <html> yang disetel JS. --}}
         <aside id="sidebar"
                data-sidebar
-               class="fixed inset-y-0 left-0 z-40 w-[17rem] shrink-0 border-r border-garis bg-permukaan transition-[width,transform] duration-200 ease-out lg:sticky lg:top-0 lg:h-screen lg:translate-x-0 lg:shadow-naik lg:shadow-transparent max-lg:-translate-x-full max-lg:shadow-tebal"
+               class="fixed inset-y-0 left-0 z-40 w-[17rem] shrink-0 border-r border-garis bg-permukaan/85 transition-[width,transform] duration-200 ease-out lg:sticky lg:top-0 lg:h-screen lg:translate-x-0 lg:shadow-naik lg:shadow-transparent max-lg:-translate-x-full max-lg:shadow-tebal"
                aria-label="Navigasi utama">
-            <div class="flex h-16 shrink-0 items-center gap-2.5 border-b border-garis px-5">
+            <div data-sidebar-kepala
+                 class="flex h-16 shrink-0 items-center gap-2.5 border-b border-garis px-5">
                 <a href="{{ route('dashboard') }}"
-                   class="flex min-w-0 items-center gap-2.5">
-                    <span aria-hidden="true"
-                          class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-inti font-mono text-[0.75rem] font-semibold text-inti-kunci shadow-halus">
-                        PN
-                    </span>
-                    <span class="min-w-0 leading-tight">
-                        <span data-sidebar-label class="block truncate text-[0.875rem] font-semibold text-tinta">Perpustakaan</span>
-                        <span data-sidebar-label class="block truncate text-[0.6875rem] text-tinta-samar">Sistem Layanan</span>
-                    </span>
+                   class="min-w-0 flex-1 rounded-lg focus-visible:outline-offset-4">
+                    <x-logo ukuran="kecil" />
                 </a>
 
                 <button type="button"

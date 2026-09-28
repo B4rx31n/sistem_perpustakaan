@@ -9,7 +9,7 @@
         'Operasional' => [
             ['route' => 'dashboard', 'label' => 'Dashboard', 'ikon' => 'dashboard', 'match' => 'dashboard'],
             ['route' => 'loans.index', 'label' => 'Peminjaman', 'ikon' => 'peminjaman', 'match' => 'loans.*', 'petugas' => true],
-            ['route' => 'reservations.index', 'label' => 'Reservasi', 'ikon' => 'reservasi', 'match' => 'reservations.*'],
+            ['route' => 'reservations.index', 'label' => 'Reservasi', 'ikon' => 'penanda', 'match' => 'reservations.*'],
         ],
         'Katalog' => [
             ['route' => 'books.index', 'label' => 'Buku', 'ikon' => 'buku', 'match' => 'books.*'],
@@ -60,7 +60,9 @@
                                @if ($aktif) aria-current="page" @endif
                                title="{{ $item['label'] }}"
                                aria-label="{{ $item['label'] }}"
-                               class="group flex items-center gap-3 rounded-lg px-3 py-2.5 text-[0.875rem] transition-[background-color,color,box-shadow] duration-150 {{ $aktif ? 'bg-inti text-inti-kunci shadow-halus' : 'text-tinta-lembut hover:bg-permukaan-lembut hover:text-tinta' }}">
+                               class="group flex items-center gap-3 rounded-lg px-3 py-2.5 text-[0.875rem] transition-[background-image,background-color,color,border-color] duration-150 {{ $aktif
+                                   ? 'border border-pastel-3 bg-grad-inti font-medium text-inti-kunci'
+                                   : 'text-tinta-lembut hover:bg-permukaan-lembut hover:text-tinta' }}">
                                 <x-icon :nama="$item['ikon']" />
                                 <span data-sidebar-label class="truncate">{{ $item['label'] }}</span>
                             </a>

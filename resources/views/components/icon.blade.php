@@ -22,6 +22,12 @@
         'bulan' => '<path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />',
         'panel-kiri' => '<path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5M3.75 9h16.5m-16.5 5.25h16.5m-16.5 5.25h16.5" />',
         'panel-kanan' => '<path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />',
+
+        /* Ikon tambahan untuk tema perpustakaan. Semuanya menggambarkan objek
+           nyata yang ada di sistem ini, bukan bentuk dekoratif: rak buku untuk
+           koleksi, dan penanda untuk buku yang sedang direservasi. */
+        'rak' => '<path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.5h16.5M3.75 19.5h16.5M5.25 4.5v15m13.5-15v15" /><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 16.5v-4.2c0-.3.2-.5.5-.5h1.6c.3 0 .5.2.5.5v4.2m.6 0V9.8c0-.3.2-.5.5-.5h1.6c.3 0 .5.2.5.5v6.7m.6 0v-3.4c0-.3.2-.5.5-.5h1.6c.3 0 .5.2.5.5v3.4" />',
+        'penanda' => '<path stroke-linecap="round" stroke-linejoin="round" d="M6 4.5A1.5 1.5 0 0 1 7.5 3h9A1.5 1.5 0 0 1 18 4.5V21l-6-3.75L6 21V4.5Z" />',
     };
 
     $kelasUkuran = $ukuran === 'besar' ? 'h-6 w-6' : 'h-5 w-5';

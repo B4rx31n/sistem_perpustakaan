@@ -11,18 +11,21 @@
      kartu ini dipakai paling banyak sekali atau dua kali per halaman supaya
      ada titik berat yang jelas. --}}
 @php
-    $gayaGaris = match ($warna) {
+    /* Disk di kiri kartu adalah penanda status metrik, jadi isiannya mengikuti
+       warna metrik dan bukan warna netral. Angka di bawahnya tetap memakai
+       lapis tinta supaya kontrasnya tinggi dan tidak ikut melemah. */
+    $gayaLatik = match ($warna) {
+        'inti' => 'bg-grad-inti',
+        'aksen' => 'bg-grad-aksen',
+        'bahaya' => 'bg-grad-bahaya',
+        default => 'bg-permukaan-lembut',
+    };
+
+    $gayaTitik = match ($warna) {
         'inti' => 'bg-inti',
         'aksen' => 'bg-aksen',
         'bahaya' => 'bg-bahaya',
         default => 'bg-garis-kuat',
-    };
-
-    $gayaLatik = match ($warna) {
-        'inti' => 'bg-inti-lembut',
-        'aksen' => 'bg-aksen-lembut',
-        'bahaya' => 'bg-bahaya-lembut',
-        default => 'bg-permukaan-lembut',
     };
 
     $gayaAngka = match ($warna) {
@@ -42,7 +45,7 @@
     ]) }}
 >
     <span aria-hidden="true" class="flex h-9 w-9 items-center justify-center rounded-lg {{ $gayaLatik }}">
-        <span class="block h-2 w-2 rounded-full {{ $gayaGaris }}"></span>
+        <span class="block h-2 w-2 rounded-full {{ $gayaTitik }}"></span>
     </span>
 
     <span class="mt-3.5 block text-[0.8125rem] font-medium text-tinta-lembut">

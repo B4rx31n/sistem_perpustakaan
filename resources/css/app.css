@@ -14,60 +14,116 @@
 | Token warna. Nilai didefinisikan di sini, bukan di @theme, supaya mode gelap hanya
 | perlu menimpa nilai yang sama. Semua komponen memakai nama token, tidak pernah
 | kode warna langsung, sehingga tidak ada komponen yang bisa luput dari mode gelap.
+|
+| Override pemilik 2026-09-28: identitas hijau katalog diganti periwinkle pastel,
+| dan gradien diizinkan pada permukaan brand (lihat DESIGN.md).
+|
+| Setiap warna punya dua lapis yang tidak boleh dicampur:
+| - Lapis tinta : --inti, --aksen, --bahaya. Nilainya gelap di mode terang dan
+|                 terang di mode gelap, karena dipakai sebagai teks dan garis.
+| - Lapis isian : --pastel-*. Nilainya selalu lembut, dipakai sebagai latar
+|                 gradien, dan teks di atasnya memakai --inti-kunci.
+| Kalau kedua lapis dicampur menjadi satu token, salah satunya pasti gagal kontras.
 */
 :root {
-    --tinta: #1c1c1a;
-    --tinta-lembut: #52524d;
-    --tinta-samar: #6f6f68;
+    --tinta: #1f1e2e;
+    --tinta-lembut: #55536b;
+    --tinta-samar: #6e6b87;
     --permukaan: #ffffff;
-    --permukaan-lembut: #fafaf8;
-    --latar: #f1f2f0;
-    --garis: #e2e3df;
-    --garis-kuat: #9a9a92;
-    --inti: #0b5844;
-    --inti-tua: #073c2e;
-    --inti-kunci: #ffffff;
-    --inti-lembut: #e7f0ec;
-    --aksen: #8a4f00;
-    --aksen-lembut: #fbf0dd;
-    --bahaya: #ab2318;
-    --bahaya-lembut: #fbe9e7;
-    --kunci: #0b5844;
+    --permukaan-lembut: #faf9fe;
+    --latar: #f4f3fb;
+    --garis: #e6e4f2;
+    --garis-kuat: #8f8cae;
+    --inti: #4a4b96;
+    --inti-tua: #36376f;
+    --inti-kunci: #2f2f6b;
+    --inti-lembut: #e8e8f8;
+    --aksen: #8a5310;
+    --aksen-lembut: #fdefdc;
+    --bahaya: #ad2b3f;
+    --bahaya-lembut: #fde9ec;
+    --kunci: #4a4b96;
+
+    /* Lapis isian. Tiga anak tangga per warna supaya ada gradasi nyata, bukan
+       sekadar satu warna polos yang diberi nama lain. Urutannya dari paling muda
+       ke paling pekat, jadi gradient selalu bergerak ke arah yang lebih berisi. */
+    --pastel-1: #e7e6fb;
+    --pastel-2: #d6d8f7;
+    --pastel-3: #c6c9f2;
+    --pastel-aksen-1: #fdeada;
+    --pastel-aksen-2: #fbdcc0;
+    --pastel-bahaya-1: #fce0e4;
+    --pastel-bahaya-2: #f9cdd4;
+
+    /* Warna kepala panel dan kartu auth. Ditulis sebagai token, bukan hasil
+       color-mix, karena Lightning CSS membuang persentase pencampuran saat
+       build sehingga fallback-nya jadi warna pekat. Nilai di bawah sudah diuji
+       terhadap --tinta, --tinta-lembut, --tinta-samar, dan --inti karena
+       keempatnya dipakai di kepala kartu. */
+    --kepala-1: #f3f2fe;
+    --kepala-2: #fdf5ed;
+
+    /*
+    | Gradien. Semua berhenti pada sudut 135 derajat supaya arah cahaya konsisten
+    | dari sudut kiri atas ke kanan bawah di seluruh aplikasi, dan tidak setiap
+    | komponen terlihat masuk ke arah yang berbeda.
+    */
+    --grad-inti: linear-gradient(135deg, var(--pastel-1), var(--pastel-3));
+    --grad-inti-tekan: linear-gradient(135deg, var(--pastel-2), var(--pastel-3));
+    --grad-aksen: linear-gradient(135deg, var(--pastel-aksen-1), var(--pastel-aksen-2));
+    --grad-bahaya: linear-gradient(135deg, var(--pastel-bahaya-1), var(--pastel-bahaya-2));
+    --grad-kepala: linear-gradient(135deg, var(--kepala-1), var(--kepala-2));
 
     /* Bayangan ditumpuk supaya tepi kartu terasa tebal, bukan seperti garis. */
-    --bayang: 0 1px 2px rgb(28 28 26 / 0.04), 0 1px 3px rgb(28 28 26 / 0.06);
-    --bayang-naik: 0 2px 4px rgb(28 28 26 / 0.04), 0 12px 28px -12px rgb(28 28 26 / 0.18);
-    --bayang-tebal: 0 2px 6px rgb(28 28 26 / 0.06), 0 18px 40px -16px rgb(28 28 26 / 0.24);
-    --cincin: 0 0 0 3px rgb(11 88 68 / 0.16);
-    --cincin-aksen: 0 0 0 3px rgb(138 79 0 / 0.18);
-    --cincin-bahaya: 0 0 0 3px rgb(171 35 24 / 0.16);
+    --bayang: 0 1px 2px rgb(31 30 46 / 0.05), 0 1px 3px rgb(31 30 46 / 0.07);
+    --bayang-naik: 0 2px 4px rgb(31 30 46 / 0.05), 0 12px 28px -12px rgb(31 30 46 / 0.2);
+    --bayang-tebal: 0 2px 6px rgb(31 30 46 / 0.07), 0 18px 40px -16px rgb(31 30 46 / 0.26);
+    --cincin: 0 0 0 3px rgb(74 75 150 / 0.2);
+    --cincin-aksen: 0 0 0 3px rgb(138 83 16 / 0.2);
+    --cincin-bahaya: 0 0 0 3px rgb(173 43 63 / 0.18);
 }
 
 .dark {
-    --tinta: #f3f3f0;
-    --tinta-lembut: #b9b9b2;
-    --tinta-samar: #9a9a93;
-    --permukaan: #1b1b19;
-    --permukaan-lembut: #232320;
-    --latar: #0e0f0e;
-    --garis: #2f302c;
-    --garis-kuat: #6f6f68;
-    --inti: #5ec9a1;
-    --inti-tua: #8fdcbd;
-    --inti-kunci: #08130f;
-    --inti-lembut: #16302a;
-    --aksen: #efb53f;
-    --aksen-lembut: #332713;
-    --bahaya: #f4867c;
-    --bahaya-lembut: #351b18;
-    --kunci: #8fdcbd;
+    --tinta: #f2f1f8;
+    --tinta-lembut: #bdbacc;
+    --tinta-samar: #a3a1b4;
+    --permukaan: #1b1a24;
+    --permukaan-lembut: #23222e;
+    --latar: #121118;
+    --garis: #2f2e3d;
+    --garis-kuat: #7d7a99;
+    --inti: #a7a7f0;
+    --inti-tua: #c3c3f7;
+    --inti-kunci: #e6e6fb;
+    --inti-lembut: #262540;
+    --aksen: #e8a94f;
+    --aksen-lembut: #3a2c17;
+    --bahaya: #f4909b;
+    --bahaya-lembut: #3d2229;
+    --kunci: #a7a7f0;
+
+    /* Pastel di mode gelap tidak boleh seterang di mode terang, karena akan
+       menyilaukan dan teks di atasnya jadi berat. Yang berubah cuma
+       luminansinya: isian jadi pekat dan perlu teks terang. */
+    --pastel-1: #33345c;
+    --pastel-2: #42437a;
+    --pastel-3: #525396;
+    --pastel-aksen-1: #3d3020;
+    --pastel-aksen-2: #4d3a20;
+    --pastel-bahaya-1: #40242f;
+    --pastel-bahaya-2: #512b35;
+
+    /* Kepala panel di mode gelap tidak boleh seterang di mode terang. Yang
+       berubah hanya luminansinya, arah gradasi tetap sama. */
+    --kepala-1: #2b2c4a;
+    --kepala-2: #332c25;
 
     --bayang: 0 1px 2px rgb(0 0 0 / 0.4), 0 1px 3px rgb(0 0 0 / 0.35);
     --bayang-naik: 0 2px 4px rgb(0 0 0 / 0.35), 0 14px 30px -14px rgb(0 0 0 / 0.65);
     --bayang-tebal: 0 2px 6px rgb(0 0 0 / 0.4), 0 20px 44px -18px rgb(0 0 0 / 0.75);
-    --cincin: 0 0 0 3px rgb(94 201 161 / 0.22);
-    --cincin-aksen: 0 0 0 3px rgb(239 181 63 / 0.22);
-    --cincin-bahaya: 0 0 0 3px rgb(244 134 124 / 0.24);
+    --cincin: 0 0 0 3px rgb(167 167 240 / 0.26);
+    --cincin-aksen: 0 0 0 3px rgb(232 169 79 / 0.26);
+    --cincin-bahaya: 0 0 0 3px rgb(244 144 155 / 0.28);
 }
 
 @theme inline {
@@ -92,6 +148,16 @@
     --color-bahaya-lembut: var(--bahaya-lembut);
     --color-kunci: var(--kunci);
 
+    /* Lapis isian dan gradien. Nama warnanya memakai garis bawah agar tidak
+       tertukar dengan warna tinta: bg-pastel-1 dan bg-inti itu dua hal berbeda. */
+    --color-pastel-1: var(--pastel-1);
+    --color-pastel-2: var(--pastel-2);
+    --color-pastel-3: var(--pastel-3);
+    --color-pastel-aksen-1: var(--pastel-aksen-1);
+    --color-pastel-aksen-2: var(--pastel-aksen-2);
+    --color-pastel-bahaya-1: var(--pastel-bahaya-1);
+    --color-pastel-bahaya-2: var(--pastel-bahaya-2);
+
     /* Sudut membulat besar. Nilai rounded-sm masih dipakai di banyak view, jadi
        mengganti nilai token ini modernize tampilan seketika tanpa menyentuh
        tiap file satu per satu. */
@@ -110,6 +176,32 @@
 }
 
 /*
+| Gradien didaftarkan sebagai @utility, bukan lewat namespace --gradient-* di
+| @theme, karena nilai gradien di sini berupa var() yang menunjuk token lain.
+| Tailwind tidak bisa menyimpulkan jenis nilainya dari var() dan diam-diam tidak
+| menghasilkan utility-nya, jadi pemanggilnya akan hilang tanpa error.
+*/
+@utility bg-grad-inti {
+    background-image: var(--grad-inti);
+}
+
+@utility bg-grad-inti-tekan {
+    background-image: var(--grad-inti-tekan);
+}
+
+@utility bg-grad-aksen {
+    background-image: var(--grad-aksen);
+}
+
+@utility bg-grad-bahaya {
+    background-image: var(--grad-bahaya);
+}
+
+@utility bg-grad-kepala {
+    background-image: var(--grad-kepala);
+}
+
+/*
 | MOTION 1: hanya transisi state pada elemen interaktif, 120ms. Tidak ada animasi
 | masuk halaman, karena produk ini dipakai membaca tabel panjang berulang kali.
 */
@@ -123,14 +215,15 @@
     body {
         @apply font-sans text-[0.9375rem] leading-relaxed antialiased;
 
-        /* Cahaya lembut di sudut atas layar memberi kedalaman pada latar polos
-           tanpa perlu gambar dekoratif. Warnanya diturunkan dari token inti
-           supaya otomatis mengikuti mode gelap. */
-        background-image: radial-gradient(
-            1100px 420px at 12% -12%,
-            color-mix(in oklab, var(--inti) 8%, transparent),
-            transparent 62%
-        );
+        /* Latar adalah satu-satunya tempat gradien boleh turun penuh di aplikasi
+           ini, dan tetap dipakai hemat: tiga genangan pastel dengan alpha rendah
+           yang tidak pernah keluar dari tepi layar. Tujuannya kedalaman pada
+           bidang kosong, bukan dekorasi. Tabel dan panel tetap datar karena di
+           situlah angka dibaca. */
+        background-image:
+            radial-gradient(1100px 460px at 8% -14%, color-mix(in oklab, var(--pastel-2) 60%, transparent), transparent 65%),
+            radial-gradient(900px 380px at 92% -6%, color-mix(in oklab, var(--pastel-aksen-1) 55%, transparent), transparent 62%),
+            radial-gradient(700px 420px at 50% 108%, color-mix(in oklab, var(--pastel-1) 45%, transparent), transparent 68%);
         background-attachment: fixed;
     }
 
@@ -209,6 +302,25 @@
     width: 5rem;
 }
 
+/*
+| Sidebar terlipat hanya selebar 5rem, sedangkan mark buku (2rem) dan tombol
+| ciut (2rem) tidak mungkin berdampingan di dalam ruang itu. Ketiganya ditumpuk
+| vertikal dan kepala sidebar dibuat lebih tinggi supaya tidak ada yang terpotong.
+| Wordmark sudah disembunyikan oleh data-sidebar-label, jadi yang tersisa tinggal
+| mark dan tombolnya.
+*/
+.sidebar-ringkas [data-sidebar-kepala] {
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.375rem;
+    height: 5.5rem;
+    padding-inline: 0;
+}
+
+.sidebar-ringkas [data-sidebar-kepala] > a {
+    flex: 0 0 auto;
+}
+
 .sidebar-ringkas [data-sidebar-label],
 .sidebar-ringkas [data-sidebar-kelompok] {
     display: none;
@@ -232,10 +344,13 @@
 @layer components {
     /*
     | Permukaan utama aplikasi. Semua kartu memakai kelas ini supaya radius,
-    | bayangan, dan warna tepi selalu sama di seluruh halaman.
+    | bayangan, dan warna tepi selalu sama di seluruh halaman. Permukaannya
+    | sedikit tembus pandang supaya genangan pastel pada latar ikut terlihat di
+    | belakangnya, tapi tanpa blur: blur hanya dipakai topbar, dan memakai
+    | blur di banyak tempat sekaligus membuat tabel terasa berkabut.
     */
     .kartu {
-        @apply rounded-xl border border-garis bg-permukaan shadow-halus;
+        @apply rounded-xl border border-garis bg-permukaan/85 shadow-halus;
     }
 
     /* Kartu yang bisa diklik atau dituju. Angkat sedikit saat hover supaya
@@ -244,16 +359,23 @@
         @apply transition-[box-shadow,transform,border-color] duration-150 ease-out hover:-translate-y-0.5 hover:border-garis-kuat hover:shadow-naik;
     }
 
-    /* Kepala panel: judul di kiri, daftar aksi di kanan. */
+    /* Kepala panel: judul di kiri, daftar aksi di kanan. Gradien tipis di sini
+       jadi penanda bahwa isi panel berikutnya adalah data, bukan bagian dari
+       navigasi. Gradien ditulis sebagai properti biasa, bukan @apply, karena
+       nilai gradien tidak bisa di-resolve lewat @apply. */
     .kepala-kartu {
-        @apply flex flex-wrap items-center justify-between gap-x-3 gap-y-1.5 border-b border-garis bg-permukaan-lembut/60 px-5 py-3.5;
+        @apply flex flex-wrap items-center justify-between gap-x-3 gap-y-1.5 border-b border-garis px-5 py-3.5;
+        background-image: var(--grad-kepala);
     }
 
     /*
     | Varian tombol. Ukuran fokus dan state hover konsisten di semua tombol.
+    | Varian utama memakai isian pastel dengan teks tinta di atasnya, bukan
+    | warna pekat dengan teks putih, supaya tombol ikut terasa lembut dan
+    | kontrasnya tetap tinggi di kedua arah.
     */
     .fokus-terang {
-        background-color: var(--inti);
+        background-image: var(--grad-inti);
         color: var(--inti-kunci);
     }
 
@@ -264,9 +386,9 @@
     }
 
     .fokus-bahaya {
-        background-color: var(--bahaya);
-        color: var(--permukaan);
-        border-color: var(--bahaya);
+        background-image: var(--grad-bahaya);
+        color: var(--bahaya);
+        border-color: var(--pastel-bahaya-2);
     }
 
     /*

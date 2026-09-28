@@ -192,7 +192,7 @@
                             {{ number_format($baris['total'], 0, ',', '.') }}
                         </span>
                         <div class="flex h-28 w-full items-end border-b border-garis">
-                            <div class="w-full bg-inti transition-colors duration-[120ms] hover:bg-inti-tua"
+                            <div class="w-full bg-grad-inti transition-[filter] duration-[120ms] hover:brightness-95"
                                  style="height: {{ $tinggi }}%"
                                  role="img"
                                  aria-label="{{ $baris['total'] }} peminjaman pada {{ $baris['label'] }} {{ $baris['tahun'] }}"></div>
